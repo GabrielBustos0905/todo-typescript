@@ -76,10 +76,30 @@ const App = (): JSX.Element => {
     setTodos(newTodos)
   }
 
+  const handleUpdateTitle = ({ id, title }: Pick<TodoType, 'id' | 'title'>): void => {
+    const newTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        return {
+          ...todo,
+          title
+        }
+      }
+
+      return todo
+    })
+
+    setTodos(newTodos)
+  }
+
   return (
     <div className='todoapp'>
       <Header onAddTodo={handleAddTodo}/>
-      <Todos todos={filteredTodos} handleRemove={handleRemove} handleCompleted={handleCompleted}/>
+      <Todos
+        todos={filteredTodos}
+        handleRemove={handleRemove}
+        handleCompleted={handleCompleted}
+        updateTitle={handleUpdateTitle}
+      />
       <Footer
         activeCount={activeCount}
         completedCount={completedCount}
